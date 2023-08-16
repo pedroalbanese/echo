@@ -5,9 +5,13 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
-var noNewline = flag.Bool("n", false, "Do not output the trailing newline")
+var (
+	noNewline = flag.Bool("n", false, "Do not output the trailing newline")
+	logEcho   = flag.Bool("l", false, "Log the echoed message along with timestamp")
+)
 
 func main() {
 	flag.Parse()
@@ -28,4 +32,14 @@ func main() {
 		}
 		fmt.Print(output + newline)
 	}
+
+	if *logEcho {
+		logEchoMessage(output)
+	}
+}
+
+func logEchoMessage(message string) {
+	currentTime := time.Now()
+	formattedTime := currentTime.Format("2006-01-02 Mon 15:04:05.000Z -0700")
+	fmt.Printf("%s: %s\r\n", formattedTime, message)
 }
