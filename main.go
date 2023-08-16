@@ -23,6 +23,11 @@ func main() {
 
 	output := strings.Join(args, " ")
 
+	if *logEcho {
+		logEchoMessage(output)
+		return
+	}
+
 	if *noNewline {
 		os.Stdout.WriteString(output)
 	} else {
@@ -31,10 +36,6 @@ func main() {
 			newline = "\r\n"
 		}
 		fmt.Print(output + newline)
-	}
-
-	if *logEcho {
-		logEchoMessage(output)
 	}
 }
 
