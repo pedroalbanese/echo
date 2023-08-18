@@ -11,6 +11,7 @@ import (
 var (
 	noNewline = flag.Bool("n", false, "Do not output the trailing newline")
 	logEcho   = flag.Bool("l", false, "Log the echoed message along with timestamp")
+	format    = flag.String("f", "2006-01-02 Mon 15:04:05.000Z -0700", "Specify the format for the log timestamp (options: UnixDate, Kitchen, \nRFC3339Nano, RFC3339, RFC1123, RFC1123Z, RubyDate, RFC822, RFC822Z, \nRFC850)")
 )
 
 func main() {
@@ -41,6 +42,32 @@ func main() {
 
 func logEchoMessage(message string) {
 	currentTime := time.Now()
-	formattedTime := currentTime.Format("2006-01-02 Mon 15:04:05.000Z -0700")
-	fmt.Printf("%s: %s\r\n", formattedTime, message)
+	var formattedTime string
+
+	switch *format {
+	case "UnixDate":
+		formattedTime = currentTime.Format(time.UnixDate)
+	case "Kitchen":
+		formattedTime = currentTime.Format(time.Kitchen)
+	case "RFC3339Nano":
+		formattedTime = currentTime.Format(time.RFC3339Nano)
+	case "RFC3339":
+		formattedTime = currentTime.Format(time.RFC3339)
+	case "RFC1123":
+		formattedTime = currentTime.Format(time.RFC1123)
+	case "RFC1123Z":
+		formattedTime = currentTime.Format(time.RFC1123Z)
+	case "RubyDate":
+		formattedTime = currentTime.Format(time.RubyDate)
+	case "RFC822":
+		formattedTime = currentTime.Format(time.RFC822)
+	case "RFC822Z":
+		formattedTime = currentTime.Format(time.RFC822Z)
+	case "RFC850":
+		formattedTime = currentTime.Format(time.RFC850)
+	default:
+		formattedTime = currentTime.Format(*format)
+	}
+
+	fmt.Printf("%s %s\r\n", formattedTime, message)
 }
