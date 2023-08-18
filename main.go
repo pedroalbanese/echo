@@ -29,13 +29,16 @@ func main() {
 		return
 	}
 
+	var newline string
+	if os.PathSeparator == '\\' {
+		newline = "\r\n"
+	} else {
+		newline = "\n"
+	}
+
 	if *noNewline {
 		os.Stdout.WriteString(output)
 	} else {
-		newline := "\n"
-		if os.PathSeparator == '\\' {
-			newline = "\r\n"
-		}
 		fmt.Print(output + newline)
 	}
 }
@@ -69,5 +72,12 @@ func logEchoMessage(message string) {
 		formattedTime = currentTime.Format(*format)
 	}
 
-	fmt.Printf("%s %s\r\n", formattedTime, message)
+	var newline string
+	if os.PathSeparator == '\\' {
+		newline = "\r\n"
+	} else {
+		newline = "\n"
+	}
+
+	fmt.Printf("%s %s%s", formattedTime, message, newline)
 }
