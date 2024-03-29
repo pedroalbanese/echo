@@ -32,13 +32,13 @@ func New(hs int) (hash.Hash, error) {
 // New returns a new hash.Hash computing the echo checksum
 func NewWithSalt(hashsize int, salt []byte) (hash.Hash, error) {
     if hashsize == 0 {
-        return nil, errors.New("go-hash/echo: hash size can't be zero")
+        return nil, errors.New("echo: hash size can't be zero")
     }
     if (hashsize % 8) > 0 {
-        return nil, errors.New("go-hash/echo: non-byte hash sizes are not supported")
+        return nil, errors.New("echo: non-byte hash sizes are not supported")
     }
     if hashsize > 512 {
-        return nil, errors.New("go-hash/echo: invalid hash size")
+        return nil, errors.New("echo: invalid hash size")
     }
 
     d := new(digest)
@@ -46,7 +46,7 @@ func NewWithSalt(hashsize int, salt []byte) (hash.Hash, error) {
 
     if len(salt) > 0 {
         if len(salt) != 16 {
-            return nil, errors.New("go-hash/echo: invalid salt length")
+            return nil, errors.New("echo: invalid salt length")
         }
 
         s := bytesToUint64s(salt)
