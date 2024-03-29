@@ -1,0 +1,2 @@
+# echo
+ECHO hash Function
